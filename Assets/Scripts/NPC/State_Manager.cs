@@ -7,6 +7,7 @@ public class State_Manager : MonoBehaviour
 {
     [SerializeField] private State_Abstract patrolState;
     [SerializeField] private State_Abstract canSeePlayerState;
+    [SerializeField] private State_Abstract chaseState;
     [SerializeField] private Enum_GuardStates initialState;
     
     [SerializeField] public NavMeshAgent navAgent;
@@ -27,6 +28,7 @@ public class State_Manager : MonoBehaviour
 
     public void SetState(Enum_GuardStates state)
     {
+        Debug.LogWarning($"ENTERING STATE: {state}");
         previousState = currentStateEnum;
         currentStateEnum = state;
         
@@ -37,6 +39,9 @@ public class State_Manager : MonoBehaviour
                 break;
             case Enum_GuardStates.CanSeePlayer:
                 ChangeState(canSeePlayerState);
+                break;
+            case Enum_GuardStates.Chase:
+                ChangeState(chaseState);
                 break;
         }
     }

@@ -52,7 +52,6 @@ public class Sense_Vision : MonoBehaviour
     {
         if (trackedTags.Contains(col.gameObject.tag))
         {
-            Debug.LogWarning($"Adding {col.gameObject.name} to tracked list");
             _objectsInFOV.Add(col.transform);
         }
     }
@@ -61,7 +60,6 @@ public class Sense_Vision : MonoBehaviour
     {
         if (trackedTags.Contains(col.gameObject.tag))
         {
-            Debug.LogWarning($"Removing {col.gameObject.name} from tracked list");
             _objectsInFOV.Remove(col.transform);
 
             if (_seenObjects.Contains(col.transform))
@@ -84,23 +82,18 @@ public class Sense_Vision : MonoBehaviour
         //SEND OUT A RAYCAST AND PUT THE HIT TO hit
         if (Physics.Raycast(transform.position, t.position - transform.position, out RaycastHit hit))
         {
-            Debug.LogWarning($"HIT TAG: {hit.transform.tag}");
-            
             if (hit.transform == t && !_seenObjects.Contains(t))
             {
                 _seenObjects.Add(t);
-                Debug.LogWarning($"ADDING {t.name} TO SEEN LIST, COUNT: {_seenObjects.Count}");
             }
             else if (hit.transform != t && _seenObjects.Contains(t))
             {
                 _seenObjects.Remove(t);
-                Debug.LogWarning($"REMOVING {t.name} FROM SEEN LIST, COUNT: {_seenObjects.Count}");
             }
         }
         else
         {
             _seenObjects.Remove(t);
-            Debug.LogWarning($"REMOVING {t.name} FROM SEEN LIST, COUNT: {_seenObjects.Count}");
         }
     }
 

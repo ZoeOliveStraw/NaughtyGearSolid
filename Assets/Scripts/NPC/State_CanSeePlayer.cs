@@ -34,16 +34,16 @@ public class State_CanSeePlayer : State_Abstract
     public override void UpdateState()
     {
         bool canSeePlayer = _vision.CanSeeObjectWithTag("Player");
-        _currentTimeToSeePlayer = 
-            Mathf.Clamp(_currentTimeToSeePlayer += canSeePlayer  ? Time.deltaTime : -Time.deltaTime,-1, timeToSeePlayer);
+        _currentTimeToSeePlayer = _currentTimeToSeePlayer += canSeePlayer ? Time.deltaTime : -Time.deltaTime;
+            Mathf.Clamp(_currentTimeToSeePlayer,0, timeToSeePlayer);
         if(canSeePlayer) RotateTowardsPlayer();
-        if (_currentTimeToSeePlayer < 0)
+        if (_currentTimeToSeePlayer <= 0)
         {
             _stateManager.SetState(_stateToReturnTo);
         }
-        else if (_currentTimeToSeePlayer > timeToSeePlayer)
+        else if (_currentTimeToSeePlayer >= timeToSeePlayer)
         {
-            Debug.LogWarning($"PLAYER SPOTTED");
+            _stateManager.SetState(Enum_GuardStates.Chase);
         }
     }
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 14320974372102397}
   - component: {fileID: 112774133864320705}
   - component: {fileID: 7735058869059935991}
+  - component: {fileID: 1314734787552621198}
   m_Layer: 0
   m_Name: Pre_NPC_Guard
   m_TagString: Guard
@@ -73,7 +74,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolState: {fileID: 112774133864320705}
-  canSeePlayerState: {fileID: 112774133864320705}
+  canSeePlayerState: {fileID: 7735058869059935991}
+  chaseState: {fileID: 1314734787552621198}
   initialState: 0
   navAgent: {fileID: 4452249246637460580}
   senseVision: {fileID: 1514605137090189204}
@@ -94,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   route: {fileID: 0}
-  visionConeColor: {r: 0, g: 1, b: 0, a: 0.33333334}
+  visionConeColor: {r: 0, g: 1, b: 0, a: 0.2509804}
 --- !u!114 &7735058869059935991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,7 +110,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 20
-  visionConeColor: {r: 1, g: 1, b: 0, a: 0.2901961}
+  visionConeColor: {r: 1, g: 1, b: 0, a: 0.2509804}
+--- !u!114 &1314734787552621198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104182635056855432}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8c31786fedce745b0985228a8caf8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionConeColor: {r: 1, g: 0, b: 0, a: 0.2509804}
 --- !u!1 &1194439948203436955
 GameObject:
   m_ObjectHideFlags: 0
