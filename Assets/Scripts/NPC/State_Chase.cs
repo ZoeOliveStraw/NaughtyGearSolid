@@ -3,20 +3,24 @@ using UnityEngine.EventSystems;
 
 public class State_Chase : State_Abstract
 {
+    [SerializeField] private Color visionConeColor;
+    [SerializeField] private float moveSpeed;
+    
     private bool _canSeePlayer;
     private Transform _playerTransform;
     private Vector3 _lastKnownPlayerPosition;
-    [SerializeField] private Color visionConeColor;
     
     public override void EnterState(State_Manager manager)
     {
         base.EnterState(manager);
+        _navMeshAgent.speed = moveSpeed;
         SetPlayerReference();
         _vision.SetVisionConeColor(visionConeColor);
     }
 
     public override void UpdateState()
     {
+        base.UpdateState();
         _canSeePlayer = CanSeePlayer();
         if(_canSeePlayer) UpdatePlayerPosition();
         if (Vector3.Distance(_lastKnownPlayerPosition, transform.position) < 0.5f)
@@ -28,14 +32,9 @@ public class State_Chase : State_Abstract
             else
             {
                 Debug.LogWarning("PLAYER LOST, EXITING STATE");
-                _stateManager.SetState(Enum_GuardStates.Patrol);
+                _stateManager.SetState(Enum_GuardStates.LookAround);
             }
         }
-    }
-
-    public override void ExitState()
-    {
-        
     }
 
     private void SetPlayerReference()

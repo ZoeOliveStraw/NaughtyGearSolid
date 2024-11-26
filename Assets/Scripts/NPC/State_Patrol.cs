@@ -5,6 +5,8 @@ public class State_Patrol : State_Abstract
 {
     [SerializeField] private PatrolRoute route;
     [SerializeField] private Color visionConeColor;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float timeToSeesPlayer;
 
     private PatrolNode _currentNode;
     private bool isGoingBack;
@@ -13,6 +15,8 @@ public class State_Patrol : State_Abstract
     public override void EnterState(State_Manager manager)
     {
         base.EnterState(manager);
+        _stateManager.timeToSeePlayer = timeToSeesPlayer;
+        _navMeshAgent.speed = moveSpeed;
         NavigateToNextNode();
         _vision.SetVisionConeColor(visionConeColor);
     }

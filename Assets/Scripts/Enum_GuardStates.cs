@@ -7,5 +7,6 @@ public enum Enum_GuardStates
     Searching,
     CanSeePlayer,
     Chase,
-    Attack
+    Attack,
+    LookAround
 }

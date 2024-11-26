@@ -8,6 +8,7 @@ public class State_Manager : MonoBehaviour
     [SerializeField] private State_Abstract patrolState;
     [SerializeField] private State_Abstract canSeePlayerState;
     [SerializeField] private State_Abstract chaseState;
+    [SerializeField] private State_Abstract lookAroundState;
     [SerializeField] private Enum_GuardStates initialState;
     
     [SerializeField] public NavMeshAgent navAgent;
@@ -42,6 +43,9 @@ public class State_Manager : MonoBehaviour
                 break;
             case Enum_GuardStates.Chase:
                 ChangeState(chaseState);
+                break;
+            case Enum_GuardStates.LookAround:
+                ChangeState(lookAroundState);
                 break;
         }
     }
