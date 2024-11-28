@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visionConeColor: {r: 1, g: 0.5019608, b: 0, a: 0.2509804}
-  durationOfCheck: 0.5
+  durationOfCheck: 2
   timeToSeesPlayer: 0.5
   rotationSpeed: 10
 --- !u!1 &1194439948203436955
