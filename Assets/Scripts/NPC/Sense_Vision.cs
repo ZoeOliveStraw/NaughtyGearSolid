@@ -82,6 +82,7 @@ public class Sense_Vision : MonoBehaviour
         //SEND OUT A RAYCAST AND PUT THE HIT TO hit
         if (Physics.Raycast(transform.position, t.position - transform.position, out RaycastHit hit))
         {
+            Debug.LogWarning($"RAYCAST HIT: {hit.collider.gameObject.name}");
             if (hit.transform == t && !_seenObjects.Contains(t))
             {
                 _seenObjects.Add(t);
@@ -97,11 +98,11 @@ public class Sense_Vision : MonoBehaviour
         }
     }
 
-    public bool CanSeeObjectWithTag(string tag)
+    public bool CanSeeObjectWithTag(string tagToCheck)
     {
         foreach (Transform t in _seenObjects)
         {
-            if (t.CompareTag(tag)) return true;
+            if (t.CompareTag(tagToCheck)) return true;
         }
         return false;
     }

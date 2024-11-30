@@ -605,6 +605,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1054823374}
     - target: {fileID: 14320974372102397, guid: 542f3c8dd03ff1340870dcb9244f367a, type: 3}
+      propertyPath: searchState
+      value: 
+      objectReference: {fileID: 1054823379}
+    - target: {fileID: 14320974372102397, guid: 542f3c8dd03ff1340870dcb9244f367a, type: 3}
       propertyPath: senseVision
       value: 
       objectReference: {fileID: 1814697138}
@@ -1464,7 +1468,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 51
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -1475,7 +1479,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: ab1bf32efff20394cb9e69721a72aa54, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 7db90993f9b835441a943613152ee7e0, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &807180194
 GameObject:
@@ -1882,7 +1886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   searchRadius: 20
-  visionConeColor: {r: 0.70375204, g: 0, b: 1, a: 1}
+  visionConeColor: {r: 0.70375204, g: 0, b: 1, a: 0.2509804}
   moveSpeed: 3.5
   timeToSeesPlayer: 0.5
 --- !u!1 &1159867642
@@ -1973,7 +1977,6 @@ MonoBehaviour:
   - {fileID: 405287472}
   - {fileID: 971285928}
   - {fileID: 2084534405}
-  Instance: {fileID: 0}
 --- !u!1 &1184266328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2913,6 +2916,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 351419069837198906, guid: 31b8940849fbf524b96187d5938b722f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2886496680721620174, guid: 31b8940849fbf524b96187d5938b722f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530719725165207549, guid: 31b8940849fbf524b96187d5938b722f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5839727382772591317, guid: 31b8940849fbf524b96187d5938b722f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2952,6 +2967,10 @@ PrefabInstance:
     - target: {fileID: 5839727382772591317, guid: 31b8940849fbf524b96187d5938b722f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911620972383641529, guid: 31b8940849fbf524b96187d5938b722f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

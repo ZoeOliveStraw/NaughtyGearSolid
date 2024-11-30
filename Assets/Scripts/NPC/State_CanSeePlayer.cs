@@ -28,12 +28,14 @@ public class State_CanSeePlayer : State_Abstract
         _currentTimeToSeePlayer = 0;
         _stateToReturnTo = _stateManager.previousState;
         _vision.SetVisionConeColor(visionConeColor);
+        _navMeshAgent.isStopped = true;
     }
 
     // Update is called once per frame
     public override void UpdateState()
     {
         bool canSeePlayer = _vision.CanSeeObjectWithTag("Player");
+        Debug.LogWarning($"CANSEEPLAYER: {canSeePlayer}");
         _currentTimeToSeePlayer = _currentTimeToSeePlayer += canSeePlayer ? Time.deltaTime : -Time.deltaTime;
             Mathf.Clamp(_currentTimeToSeePlayer,0, timeToSeePlayer);
         if(canSeePlayer) RotateTowardsPlayer();
@@ -43,6 +45,7 @@ public class State_CanSeePlayer : State_Abstract
         }
         else if (_currentTimeToSeePlayer >= timeToSeePlayer)
         {
+            Debug.LogWarning($"BAR FILLED, CHASING");
             _stateManager.SetState(Enum_GuardStates.Chase);
         }
     }
@@ -54,4 +57,11 @@ public class State_CanSeePlayer : State_Abstract
         Quaternion targetRotation = Quaternion.LookRotation(adjustedPlayerPos);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
     }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        _navMeshAgent.isStopped = false;
+    }
+    
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7735058869059935991}
   - component: {fileID: 1314734787552621198}
   - component: {fileID: 2477972497132489373}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pre_NPC_Guard
   m_TagString: Guard
   m_Icon: {fileID: 0}
@@ -78,13 +78,16 @@ MonoBehaviour:
   canSeePlayerState: {fileID: 7735058869059935991}
   chaseState: {fileID: 1314734787552621198}
   lookAroundState: {fileID: 2477972497132489373}
+  searchState: {fileID: 0}
   initialState: 0
   navAgent: {fileID: 4452249246637460580}
   senseVision: {fileID: 1514605137090189204}
   senseHearing: {fileID: 613874093243135792}
-  timeToSeePlayer: 2
   previousState: 0
   currentStateEnum: 0
+  timeToSeePlayer: 2
+  timeToSearch: 20
+  _currentNodeTarget: {fileID: 0}
 --- !u!114 &112774133864320705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,7 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6926064025487483620}
   - component: {fileID: 613874093243135792}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hearing
   m_TagString: Guard
   m_Icon: {fileID: 0}
@@ -200,7 +203,7 @@ GameObject:
   - component: {fileID: 3851295241289655866}
   - component: {fileID: 2582899878198656212}
   - component: {fileID: 5744145759197316792}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Auto Detection Zone
   m_TagString: Guard
   m_Icon: {fileID: 0}
@@ -398,7 +401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 87008543619946718}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Guard Body
   m_TagString: Guard
   m_Icon: {fileID: 0}
@@ -433,7 +436,7 @@ GameObject:
   - component: {fileID: 3862546649399281867}
   - component: {fileID: 573446121523945564}
   - component: {fileID: 8256277583592171966}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Guard
   m_Icon: {fileID: 0}
@@ -517,7 +520,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4188630928217819621}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Senses
   m_TagString: Guard
   m_Icon: {fileID: 0}
@@ -553,7 +556,7 @@ GameObject:
   - component: {fileID: 8768769312583309264}
   - component: {fileID: 5007896935467300632}
   - component: {fileID: 2948804283386716741}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Guard
   m_Icon: {fileID: 0}
@@ -638,7 +641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7136558255185440595}
   - component: {fileID: 7250515549448577208}
-  m_Layer: 2
+  m_Layer: 7
   m_Name: Collision
   m_TagString: Guard
   m_Icon: {fileID: 0}
