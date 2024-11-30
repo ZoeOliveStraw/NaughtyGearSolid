@@ -51,6 +51,12 @@ public class State_Patrol : State_Abstract
     
     private void NavigateToNextNode()
     {
+        if (_currentNode == null && _stateManager._currentNodeTarget != null)
+        {
+            _currentNode = _stateManager._currentNodeTarget;
+            return;
+        }
+        
         if (route.NodeCount() <= 1)
         {
             isStopped = true;
@@ -59,5 +65,11 @@ public class State_Patrol : State_Abstract
         _currentNode = route.GetNextNode(_currentNode, ref isGoingBack);
         if (_currentNode == null) return;
         _navMeshAgent.SetDestination(_currentNode.transform.position);
+    }
+
+    public override void ExitState()
+    {
+        base.ExitState();
+        _stateManager._currentNodeTarget = _currentNode;
     }
 }

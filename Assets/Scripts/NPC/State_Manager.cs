@@ -15,12 +15,13 @@ public class State_Manager : MonoBehaviour
     [SerializeField] public Sense_Vision senseVision;
     [SerializeField] public Sense_Hearing senseHearing;
     
-    private State_Abstract currentState;
-
-    public float timeToSeePlayer;
-    
     public Enum_GuardStates previousState;
     public Enum_GuardStates currentStateEnum;
+    public float timeToSeePlayer;
+    public float timeToSearch;
+    public PatrolNode _currentNodeTarget;
+    
+    private State_Abstract currentState;
 
     private void Start()
     {
