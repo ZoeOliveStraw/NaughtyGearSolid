@@ -9,6 +9,7 @@ public class State_Manager : MonoBehaviour
     [SerializeField] private State_Abstract canSeePlayerState;
     [SerializeField] private State_Abstract chaseState;
     [SerializeField] private State_Abstract lookAroundState;
+    [SerializeField] private State_Abstract searchState;
     [SerializeField] private Enum_GuardStates initialState;
     
     [SerializeField] public NavMeshAgent navAgent;
@@ -18,7 +19,7 @@ public class State_Manager : MonoBehaviour
     public Enum_GuardStates previousState;
     public Enum_GuardStates currentStateEnum;
     public float timeToSeePlayer;
-    public float timeToSearch;
+    public float timeToSearch = 20;
     public PatrolNode _currentNodeTarget;
     
     private State_Abstract currentState;
@@ -47,6 +48,9 @@ public class State_Manager : MonoBehaviour
                 break;
             case Enum_GuardStates.LookAround:
                 ChangeState(lookAroundState);
+                break;
+            case Enum_GuardStates.Searching:
+                ChangeState(searchState);
                 break;
         }
     }

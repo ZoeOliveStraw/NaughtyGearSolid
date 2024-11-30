@@ -60,7 +60,7 @@ public class State_LookAround : State_Abstract
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(durationOfCheck);
-        _stateManager.SetState(Enum_GuardStates.Patrol);
+        _stateManager.SetState(Enum_GuardStates.Searching);
     }
     
     private float RotateTowardTarget()
