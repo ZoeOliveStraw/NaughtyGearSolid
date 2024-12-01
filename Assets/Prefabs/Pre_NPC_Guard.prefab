@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 7735058869059935991}
   - component: {fileID: 1314734787552621198}
   - component: {fileID: 2477972497132489373}
+  - component: {fileID: 2752510054896782414}
+  - component: {fileID: 2784622394521106257}
+  - component: {fileID: 3123945540020034926}
   m_Layer: 7
   m_Name: Pre_NPC_Guard
   m_TagString: Guard
@@ -78,7 +81,8 @@ MonoBehaviour:
   canSeePlayerState: {fileID: 7735058869059935991}
   chaseState: {fileID: 1314734787552621198}
   lookAroundState: {fileID: 2477972497132489373}
-  searchState: {fileID: 0}
+  searchState: {fileID: 2752510054896782414}
+  investigateState: {fileID: 2784622394521106257}
   initialState: 0
   navAgent: {fileID: 4452249246637460580}
   senseVision: {fileID: 1514605137090189204}
@@ -88,6 +92,7 @@ MonoBehaviour:
   timeToSeePlayer: 2
   timeToSearch: 20
   _currentNodeTarget: {fileID: 0}
+  InvestigationTarget: {x: 0, y: 0, z: 0}
 --- !u!114 &112774133864320705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   route: {fileID: 0}
   visionConeColor: {r: 0, g: 1, b: 0, a: 0.2509804}
-  moveSpeed: 3.5
+  moveSpeed: 2.5
   timeToSeesPlayer: 2
 --- !u!114 &7735058869059935991
 MonoBehaviour:
@@ -116,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823d7ce608b5de74393a56dd22993d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 20
+  rotationSpeed: 3
   visionConeColor: {r: 1, g: 1, b: 0, a: 0.2509804}
 --- !u!114 &1314734787552621198
 MonoBehaviour:
@@ -148,6 +153,51 @@ MonoBehaviour:
   durationOfCheck: 2
   timeToSeesPlayer: 0.5
   rotationSpeed: 10
+--- !u!114 &2752510054896782414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104182635056855432}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d41f5ba4e8b7cf4da7f15236a7258b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchRadius: 20
+  visionConeColor: {r: 0.70375204, g: 0, b: 1, a: 0.2509804}
+  moveSpeed: 3.5
+  timeToSeesPlayer: 0.5
+  waitAtStopDuration: 1
+--- !u!114 &2784622394521106257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104182635056855432}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab5d6c751cafc4419e4afe85398ea7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durationOfWait: 2
+  rotationSpeed: 10
+  timeToSeePlayer: 0.5
+  visionConeColor: {r: 0, g: 0, b: 1, a: 0.2509804}
+--- !u!114 &3123945540020034926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104182635056855432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f42a26236d1054fb0f902a9755d3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1194439948203436955
 GameObject:
   m_ObjectHideFlags: 0

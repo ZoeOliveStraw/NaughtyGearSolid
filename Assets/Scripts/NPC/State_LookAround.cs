@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class State_LookAround : State_Abstract
 {
@@ -48,28 +49,19 @@ public class State_LookAround : State_Abstract
     private IEnumerator WhatDo()
     {
         yield return new WaitForSeconds(durationOfCheck);
-        while (RotateTowardTarget() > 0.1f)
+        while (RotateTowardTarget(_targetVector, rotationSpeed) > 0.1f)
         {
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(durationOfCheck);
         if (_targetVector == _rightTarget) _targetVector = _leftTarget;
         else _targetVector = _rightTarget;
-        while (RotateTowardTarget() > 0.1f)
+        while (RotateTowardTarget(_targetVector, rotationSpeed) > 0.1f)
         {
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(durationOfCheck);
         _stateManager.SetState(Enum_GuardStates.Searching);
-    }
-    
-    private float RotateTowardTarget()
-    {
-        Vector3 targetPos = transform.position + _targetVector;
-        Quaternion targetRotation = Quaternion.LookRotation(targetPos - transform.position);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-        float angleToTarget = Quaternion.Angle(transform.rotation, targetRotation);
-        return angleToTarget;
     }
 
     public override void ExitState()

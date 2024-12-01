@@ -21,11 +21,18 @@ public abstract class State_Abstract : MonoBehaviour
     // Update is called once per frame
     public virtual void UpdateState()
     {
-        
     }
 
     public virtual void ExitState()
     {
-        
+    }
+    
+    protected float RotateTowardTarget(Vector3 targetVector, float rotationSpeed)
+    {
+        Vector3 targetPos = transform.position + targetVector;
+        Quaternion targetRotation = Quaternion.LookRotation(targetPos - transform.position);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        float angleToTarget = Quaternion.Angle(transform.rotation, targetRotation);
+        return angleToTarget;
     }
 }
