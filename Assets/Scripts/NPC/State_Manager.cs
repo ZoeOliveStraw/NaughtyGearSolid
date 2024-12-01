@@ -60,7 +60,7 @@ public class State_Manager : MonoBehaviour
         }
     }
 
-    public void ChangeState(State_Abstract newState)
+    private void ChangeState(State_Abstract newState)
     {
         if (currentState != null)
         {

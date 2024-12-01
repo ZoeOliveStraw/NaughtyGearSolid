@@ -20,11 +20,9 @@ public class DebugGuard : MonoBehaviour
     private void InvestigatePlayer()
     {
         if (StageManager.Instance == null) return;
-
-        Vector3 playerPos = StageManager.Instance.GetPlayerTransform().position;
-        _stateManager.InvestigationTarget = playerPos;
-        _stateManager.SetState(Enum_GuardStates.Investigate);
         
+        _stateManager.InvestigationTarget = StageManager.Instance.GetPlayerTransform().position;
+        _stateManager.SetState(Enum_GuardStates.Investigate);
     }
 
     private void OnEnable()

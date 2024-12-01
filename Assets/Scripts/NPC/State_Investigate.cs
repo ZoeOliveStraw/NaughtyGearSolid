@@ -5,7 +5,7 @@ public class State_Investigate : State_Abstract
 {
     [SerializeField] float durationOfWait = 2.0f;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private float timeToSeePlayer;
+    [SerializeField] private float timeToSeePlayer = 0.5f;
     [SerializeField] private Color visionConeColor;
     
     private Coroutine _coroutine;
@@ -17,56 +17,63 @@ public class State_Investigate : State_Abstract
         base.EnterState(manager);
         _vision.SetVisionConeColor(visionConeColor);
         _stateManager.timeToSeePlayer = timeToSeePlayer;
-        _targetPosition = _stateManager.InvestigationTarget;
-        _coroutine = StartCoroutine(LookAround());
+    }
+
+    public override void UpdateState()
+    {
+        base.UpdateState();
+
+        if (_vision.CanSeeObjectWithTag("Player"))
+        {
+            _stateManager.SetState(Enum_GuardStates.CanSeePlayer);
+        }
+        
+        if (_coroutine == null)
+        {
+            _coroutine = StartCoroutine(LookAround());
+        }
     }
 
     private IEnumerator LookAround()
     {
-        Debug.LogWarning("LOOK AROUND ENTERED");
+        _targetPosition = _stateManager.InvestigationTarget;
         _navMeshAgent.isStopped = true;
-        Vector3 rightTarget = transform.right; // Local right
-        Vector3 leftTarget = -transform.right; // Local left
-        
-        Vector3 targetVector = _targetPosition;
-        
-        while (RotateTowardTarget(targetVector, rotationSpeed) > 0.1f)
+        while (RotateTowardTarget(_targetPosition, rotationSpeed) > 0.1f)
         {
             yield return new WaitForEndOfFrame();
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(durationOfWait);
         _navMeshAgent.isStopped = false;
-        
         _navMeshAgent.SetDestination(_targetPosition);
-        Debug.LogWarning("SETTING NAV TARGET");
-        while (_navMeshAgent.remainingDistance != 0)
+        while (_navMeshAgent.remainingDistance > 0)
         {
             yield return new WaitForEndOfFrame();
         }
-        
-        Debug.LogWarning("LOOKING AROUND");
-        
-        targetVector = Random.Range(0, 1) < 0.5f ? leftTarget : rightTarget;
-        
-        yield return new WaitForSeconds(durationOfWait);
-        while (RotateTowardTarget(targetVector, rotationSpeed) > 0.1f)
+        Vector3 _rightTarget = transform.right; // Local right
+        Vector3 _leftTarget = -transform.right; // Local left
+        _targetPosition = Random.Range(0, 1) < 0.5f ? _rightTarget : _leftTarget;
+        while (RotateTowardTarget(_targetPosition, rotationSpeed) > 0.1f)
         {
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(durationOfWait);
-        if (targetVector == rightTarget) targetVector = leftTarget;
-        else targetVector = rightTarget;
-        while (RotateTowardTarget(targetVector, rotationSpeed) > 0.1f)
+        if (_targetPosition == _rightTarget) _targetPosition = _leftTarget;
+        else _targetPosition = _rightTarget;
+        
+        while (RotateTowardTarget(_targetPosition, rotationSpeed) > 0.1f)
         {
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(durationOfWait);
+        
         _stateManager.SetState(Enum_GuardStates.Patrol);
     }
 
     public override void ExitState()
     {
         base.ExitState();
-        if(_coroutine != null) StopCoroutine(_coroutine);
+        _navMeshAgent.isStopped = false;
+        StopCoroutine(_coroutine);
+        _coroutine = null;
     }
 }

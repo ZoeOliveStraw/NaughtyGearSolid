@@ -30,4 +30,9 @@ public class StageManager : MonoBehaviour
     {
         return playerController.transform;
     }
+
+    public Vector3 GetPlayerPosition()
+    {
+        return playerController.transform.position;
+    }
 }
