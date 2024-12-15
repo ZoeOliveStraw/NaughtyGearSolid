@@ -8,6 +8,8 @@ public class LevelManager : MonoBehaviour
     [HideInInspector] public LevelInfo currentLevelInfo;
     private string _currentlyLoadedStage;
     private int _currentStageIndex;
+    
+    public int CurrentAlarms { get; set; }
 
     public static LevelManager Instance;
     
@@ -29,6 +31,7 @@ public class LevelManager : MonoBehaviour
 
     private void LoadFirstStage()
     {
+        CurrentAlarms = currentLevelInfo.alarmsUntilFailure;
         string firstStageName = currentLevelInfo.levelStages[0].levelSceneName;
         _currentStageIndex = 0;
         SceneManager.LoadSceneAsync(firstStageName, LoadSceneMode.Additive);
@@ -46,6 +49,18 @@ public class LevelManager : MonoBehaviour
             _currentStageIndex++;
             LoadStage(currentLevelInfo.levelStages[_currentStageIndex].levelSceneName);
         }
+    }
+
+    public void Alarm()
+    {
+        CurrentAlarms--;
+        if(CurrentAlarms == 0) StartCoroutine(LoadGameOver());
+        else ResetStage();
+    }
+
+    public void ResetStage()
+    {
+        LoadStage(currentLevelInfo.levelStages[_currentStageIndex].levelSceneName);
     }
 
     private void LoadStage(string stageName)
@@ -99,13 +114,22 @@ public class LevelManager : MonoBehaviour
         GameManager.Instance.EnterState(Enum_GameStates.MapScreen, false);
     }
 
-    private void LoadGameOver()
+    private IEnumerator LoadGameOver()
     {
-        GameManager.Instance.EnterState(Enum_GameStates.MapScreen);
-    }
-
-    private void ResetLevel()
-    {
-        GameManager.Instance.EnterState(Enum_GameStates.Gameplay);
+        GameObject loadingScreenGo = GameManager.Instance.loadingScreenGo;
+        UI_LoadingScreen loadingScreenUI = GameManager.Instance.loadingScreenUI;
+        
+        loadingScreenGo.SetActive(true);
+        yield return new WaitForSeconds(loadingScreenUI.LoadFadeIn(1));
+        
+        if (!string.IsNullOrEmpty(_currentlyLoadedStage))
+        {
+            AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(_currentlyLoadedStage);
+            while (asyncUnload != null && !asyncUnload.isDone)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        GameManager.Instance.EnterState(Enum_GameStates.MapScreen, false);
     }
 }

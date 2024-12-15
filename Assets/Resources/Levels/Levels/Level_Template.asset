@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Tutorial
   levelDescription: This is the first level of the tutorial!
-  alarmsUntilFailure: 0
+  alarmsUntilFailure: 3
   levelStages:
   - {fileID: 11400000, guid: 89eeab78923c4b54da180f71127b2bf3, type: 2}
   - {fileID: 11400000, guid: b94e3d7cd6c3ebd42aa0e3738b2236c7, type: 2}

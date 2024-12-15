@@ -11,10 +11,13 @@ public class StageManager : MonoBehaviour
     
     public static StageManager Instance;
 
+    private Controls _controls;
+
 
     private void Awake()
     {
         Instance = this;
+        _controls = new Controls();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,6 +26,17 @@ public class StageManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetNewMainCamera(stageCamera);
+        }
+
+        _controls.Debug.Alarm.performed += ctx => Alarm();
+    }
+
+    private void Alarm()
+    {
+        Debug.LogWarning("ALARM CAUSED!");
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.Alarm();
         }
     }
 
@@ -34,5 +48,15 @@ public class StageManager : MonoBehaviour
     public Vector3 GetPlayerPosition()
     {
         return playerController.transform.position;
+    }
+
+    private void OnEnable()
+    {
+        _controls.Enable();
+    }
+    
+    private void OnDisable()
+    {
+        _controls.Disable();
     }
 }

@@ -1025,6 +1025,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Alarm"",
+                    ""type"": ""Button"",
+                    ""id"": ""d615d973-0de1-428c-a1a9-76d976334e13"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1058,6 +1067,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Investigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7b752d1-0ecf-490a-b62d-66bc9adac8d1"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Alarm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc404666-3aba-4ff7-8846-36a3a63699ac"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Alarm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1153,6 +1184,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_Investigate = m_Debug.FindAction("Investigate", throwIfNotFound: true);
+        m_Debug_Alarm = m_Debug.FindAction("Alarm", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -1450,11 +1482,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Debug;
     private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
     private readonly InputAction m_Debug_Investigate;
+    private readonly InputAction m_Debug_Alarm;
     public struct DebugActions
     {
         private @Controls m_Wrapper;
         public DebugActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Investigate => m_Wrapper.m_Debug_Investigate;
+        public InputAction @Alarm => m_Wrapper.m_Debug_Alarm;
         public InputActionMap Get() { return m_Wrapper.m_Debug; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1467,6 +1501,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Investigate.started += instance.OnInvestigate;
             @Investigate.performed += instance.OnInvestigate;
             @Investigate.canceled += instance.OnInvestigate;
+            @Alarm.started += instance.OnAlarm;
+            @Alarm.performed += instance.OnAlarm;
+            @Alarm.canceled += instance.OnAlarm;
         }
 
         private void UnregisterCallbacks(IDebugActions instance)
@@ -1474,6 +1511,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Investigate.started -= instance.OnInvestigate;
             @Investigate.performed -= instance.OnInvestigate;
             @Investigate.canceled -= instance.OnInvestigate;
+            @Alarm.started -= instance.OnAlarm;
+            @Alarm.performed -= instance.OnAlarm;
+            @Alarm.canceled -= instance.OnAlarm;
         }
 
         public void RemoveCallbacks(IDebugActions instance)
@@ -1564,5 +1604,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface IDebugActions
     {
         void OnInvestigate(InputAction.CallbackContext context);
+        void OnAlarm(InputAction.CallbackContext context);
     }
 }

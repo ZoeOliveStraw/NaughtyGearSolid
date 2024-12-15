@@ -1003,6 +1003,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Alarm",
+                    "type": "Button",
+                    "id": "d615d973-0de1-428c-a1a9-76d976334e13",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1036,6 +1045,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Investigate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7b752d1-0ecf-490a-b62d-66bc9adac8d1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alarm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc404666-3aba-4ff7-8846-36a3a63699ac",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Alarm",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
