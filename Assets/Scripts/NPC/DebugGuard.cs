@@ -1,37 +1,39 @@
-using System;
 using UnityEngine;
 
-public class DebugGuard : MonoBehaviour
+namespace NPC
 {
-    private Controls _controls;
-    private State_Manager _stateManager;
-
-    private void Awake()
+    public class DebugGuard : MonoBehaviour
     {
-        _controls = new Controls();
-    }
+        private Controls _controls;
+        private State_Manager _stateManager;
 
-    private void Start()
-    {
-        _stateManager = GetComponent<State_Manager>();
-        _controls.Debug.Investigate.performed += ctx => InvestigatePlayer();
-    }
+        private void Awake()
+        {
+            _controls = new Controls();
+        }
 
-    private void InvestigatePlayer()
-    {
-        if (StageManager.Instance == null) return;
+        private void Start()
+        {
+            _stateManager = GetComponent<State_Manager>();
+            _controls.Debug.Investigate.performed += ctx => InvestigatePlayer();
+        }
+
+        private void InvestigatePlayer()
+        {
+            if (StageManager.Instance == null) return;
         
-        _stateManager.InvestigationTarget = StageManager.Instance.GetPlayerTransform().position;
-        _stateManager.SetState(Enum_GuardStates.Investigate);
-    }
+            _stateManager.InvestigationTarget = StageManager.Instance.GetPlayerTransform().position;
+            _stateManager.SetState(Enum_GuardStates.Investigate);
+        }
 
-    private void OnEnable()
-    {
-        _controls.Enable();
-    }
+        private void OnEnable()
+        {
+            _controls.Enable();
+        }
 
-    private void OnDisable()
-    {
-        _controls.Disable();
+        private void OnDisable()
+        {
+            _controls.Disable();
+        }
     }
 }

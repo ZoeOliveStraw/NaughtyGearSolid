@@ -17,7 +17,7 @@ public class PlayerMovement_Map : MonoBehaviour
 
     private void Start()
     {
-        _controls.Player.Interact.performed += ctx => Debug.LogWarning("INTERACT");
+        InputHandler.Controls.UI.Submit.performed += ctx => Debug.LogWarning("INTERACT");
     }
 
     private void FixedUpdate()
@@ -30,7 +30,7 @@ public class PlayerMovement_Map : MonoBehaviour
     
     private void Inputs()
     {
-        Vector2 _movementVector = _controls.Player.Move.ReadValue<Vector2>();
+        Vector2 _movementVector = InputHandler.MoveDir();
         _3dMoveVector = new Vector3(_movementVector.x, 0, _movementVector.y);
     }
 
@@ -53,7 +53,7 @@ public class PlayerMovement_Map : MonoBehaviour
     {
         if (other.CompareTag("Level Token"))
         {
-            _controls.Player.Interact.performed += ctx => SelectLevel();
+            InputHandler.Controls.UI.Submit.performed += ctx => SelectLevel();
         }
     }
 
@@ -61,8 +61,8 @@ public class PlayerMovement_Map : MonoBehaviour
     {
         if (other.CompareTag("Level Token"))
         {
-            _controls.Player.Interact.performed -= ctx => SelectLevel();
-        }
+            InputHandler.Controls.UI.Submit.performed -= ctx => SelectLevel();
+        }   
     }
 
     private void SelectLevel()

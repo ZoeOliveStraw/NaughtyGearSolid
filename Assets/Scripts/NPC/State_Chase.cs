@@ -1,65 +1,67 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class State_Chase : State_Abstract
+namespace NPC
 {
-    [SerializeField] private Color visionConeColor;
-    [SerializeField] private float moveSpeed;
-    
-    private bool _canSeePlayer;
-    private Transform _playerTransform;
-    private Vector3 _lastKnownPlayerPosition;
-    
-    public override void EnterState(State_Manager manager)
+    public class State_Chase : State_Abstract
     {
-        base.EnterState(manager);
-        _navMeshAgent.speed = moveSpeed;
-        SetPlayerReference();
-        _vision.SetVisionConeColor(visionConeColor);
-    }
-
-    public override void UpdateState()
-    {
-        base.UpdateState();
-        _canSeePlayer = CanSeePlayer();
-        if(_canSeePlayer) UpdatePlayerPosition();
-        if (Vector3.Distance(_lastKnownPlayerPosition, transform.position) < 0.5f)
+        [SerializeField] private Color visionConeColor;
+        [SerializeField] private float moveSpeed;
+    
+        private bool _canSeePlayer;
+        private Transform _playerTransform;
+        private Vector3 _lastKnownPlayerPosition;
+    
+        public override void EnterState(State_Manager manager)
         {
-            if (_canSeePlayer)
+            base.EnterState(manager);
+            _navMeshAgent.speed = moveSpeed;
+            SetPlayerReference();
+            _vision.SetVisionConeColor(visionConeColor);
+        }
+
+        public override void UpdateState()
+        {
+            base.UpdateState();
+            _canSeePlayer = CanSeePlayer();
+            if(_canSeePlayer) UpdatePlayerPosition();
+            if (Vector3.Distance(_lastKnownPlayerPosition, transform.position) < 0.5f)
             {
-                Debug.LogWarning("PLAYER CAUGHT!");
+                if (_canSeePlayer)
+                {
+                    Debug.LogWarning("PLAYER CAUGHT!");
+                }
+                else
+                {
+                    Debug.LogWarning("PLAYER LOST, EXITING STATE");
+                    _stateManager.SetState(Enum_GuardStates.LookAround);
+                }
+            }
+        }
+
+        private void SetPlayerReference()
+        {
+            if (StageManager.Instance != null)
+            {
+                _playerTransform = StageManager.Instance.GetPlayerTransform();
             }
             else
             {
-                Debug.LogWarning("PLAYER LOST, EXITING STATE");
-                _stateManager.SetState(Enum_GuardStates.LookAround);
+                _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             }
         }
-    }
 
-    private void SetPlayerReference()
-    {
-        if (StageManager.Instance != null)
+        private bool CanSeePlayer()
         {
-            _playerTransform = StageManager.Instance.GetPlayerTransform();
+            return _vision.CanSeeObjectWithTag("Player");
         }
-        else
-        {
-            _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-    }
 
-    private bool CanSeePlayer()
-    {
-        return _vision.CanSeeObjectWithTag("Player");
-    }
-
-    private void UpdatePlayerPosition()
-    {
-        if (Vector3.Distance(_playerTransform.position, _lastKnownPlayerPosition) > 0.1f)
+        private void UpdatePlayerPosition()
         {
-            _lastKnownPlayerPosition = _playerTransform.position;
+            if (Vector3.Distance(_playerTransform.position, _lastKnownPlayerPosition) > 0.1f)
+            {
+                _lastKnownPlayerPosition = _playerTransform.position;
+            }
+            _navMeshAgent.SetDestination(_lastKnownPlayerPosition);
         }
-        _navMeshAgent.SetDestination(_lastKnownPlayerPosition);
     }
 }

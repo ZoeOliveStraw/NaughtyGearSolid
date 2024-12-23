@@ -8,10 +8,10 @@ public class StageManager : MonoBehaviour
 {
     [SerializeField] private Camera stageCamera;
     [SerializeField] private GameObject playerController;
-    
-    public static StageManager Instance;
 
     private Controls _controls;
+    
+    public static StageManager Instance;
 
 
     private void Awake()

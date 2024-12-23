@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class Sense_AutoDetection : MonoBehaviour
+namespace NPC
 {
+    public class Sense_AutoDetection : MonoBehaviour
+    {
     
+    }
 }

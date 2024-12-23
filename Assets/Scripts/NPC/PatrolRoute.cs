@@ -1,115 +1,117 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolRoute : MonoBehaviour
+namespace NPC
 {
-    [SerializeField] private List<PatrolNode> nodes = new ();
-    [SerializeField] private bool circularPath;
-
-    private void Start()
+    public class PatrolRoute : MonoBehaviour
     {
-        Initialize();
-    }
+        [SerializeField] private List<PatrolNode> nodes = new ();
+        [SerializeField] private bool circularPath;
 
-    public void Initialize()
-    {
-        Debug.LogWarning($"INITIALIZE CALLED");
-        nodes.Clear();
-        foreach (Transform child in transform)
+        private void Start()
         {
-            nodes.Add(child.GetComponent<PatrolNode>());
+            Initialize();
         }
-    }
 
-    public int NodeCount()
-    {
-        return nodes.Count;
-    }
-
-    public PatrolNode GetNextNode(PatrolNode currentNode, ref bool isGoingBack)
-    {
-        
-        //RETURN FIRSRT NODE IF THERE IS NO CURRENT NODE
-        if (currentNode == null && nodes.Count >= 1)
+        public void Initialize()
         {
-            Debug.LogWarning($"RETURNING: {0}");
-            return nodes[0];
-        }
-        
-        //RETURN NO NODE IF THERE'S ONLY ONE
-        if (nodes.Count == 0 || nodes.Count == 1)
-        {
-            Debug.LogWarning($"RETURNING: null nodes");
-            return null;
-        }
-        
-        int indexOfCurrentNode = 0;
-        
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            if (nodes[i] == currentNode)
+            Debug.LogWarning($"INITIALIZE CALLED");
+            nodes.Clear();
+            foreach (Transform child in transform)
             {
-                indexOfCurrentNode = i;
-                break;
+                nodes.Add(child.GetComponent<PatrolNode>());
             }
         }
 
-        if (indexOfCurrentNode == 0)
+        public int NodeCount()
         {
-            isGoingBack = false;
-            Debug.LogWarning($"RETURNING: {1}");
-            return nodes[1];
+            return nodes.Count;
         }
 
-        if (indexOfCurrentNode == nodes.Count - 1 && !circularPath)
+        public PatrolNode GetNextNode(PatrolNode currentNode, ref bool isGoingBack)
         {
-            isGoingBack = true;
-        }
         
-        if (isGoingBack)
-        {
-            Debug.LogWarning($"RETURNING: {indexOfCurrentNode - 1}");
-            return nodes[indexOfCurrentNode - 1];
-        }
-        Debug.LogWarning($"RETURNING: {(indexOfCurrentNode == (nodes.Count - 1) ? 0 : indexOfCurrentNode + 1)}");
-        return indexOfCurrentNode == nodes.Count - 1 ? nodes[0] : nodes[indexOfCurrentNode + 1];
-    }
-
-    public void DeleteNode(PatrolNode nodeToDelete)
-    {
-        if (nodes.Count == 1) return;
-        nodes.Remove(nodeToDelete);
-        Initialize();
-    }
-
-    private void OnDrawGizmos()
-    {
-        for (int i = 0; i < nodes.Count; i++)
-        {
-            if (nodes[i] == null)
+            //RETURN FIRSRT NODE IF THERE IS NO CURRENT NODE
+            if (currentNode == null && nodes.Count >= 1)
             {
-                Initialize();
-                break;
+                Debug.LogWarning($"RETURNING: {0}");
+                return nodes[0];
+            }
+        
+            //RETURN NO NODE IF THERE'S ONLY ONE
+            if (nodes.Count == 0 || nodes.Count == 1)
+            {
+                Debug.LogWarning($"RETURNING: null nodes");
+                return null;
+            }
+        
+            int indexOfCurrentNode = 0;
+        
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i] == currentNode)
+                {
+                    indexOfCurrentNode = i;
+                    break;
+                }
             }
 
-            if (i < nodes.Count - 1)
+            if (indexOfCurrentNode == 0)
             {
-                if (nodes[i + 1] == null)
+                isGoingBack = false;
+                Debug.LogWarning($"RETURNING: {1}");
+                return nodes[1];
+            }
+
+            if (indexOfCurrentNode == nodes.Count - 1 && !circularPath)
+            {
+                isGoingBack = true;
+            }
+        
+            if (isGoingBack)
+            {
+                Debug.LogWarning($"RETURNING: {indexOfCurrentNode - 1}");
+                return nodes[indexOfCurrentNode - 1];
+            }
+            Debug.LogWarning($"RETURNING: {(indexOfCurrentNode == (nodes.Count - 1) ? 0 : indexOfCurrentNode + 1)}");
+            return indexOfCurrentNode == nodes.Count - 1 ? nodes[0] : nodes[indexOfCurrentNode + 1];
+        }
+
+        public void DeleteNode(PatrolNode nodeToDelete)
+        {
+            if (nodes.Count == 1) return;
+            nodes.Remove(nodeToDelete);
+            Initialize();
+        }
+
+        private void OnDrawGizmos()
+        {
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i] == null)
                 {
                     Initialize();
                     break;
                 }
-            }
+
+                if (i < nodes.Count - 1)
+                {
+                    if (nodes[i + 1] == null)
+                    {
+                        Initialize();
+                        break;
+                    }
+                }
             
             
-            if (i < nodes.Count - 1)
-            {
-                Gizmos.DrawLine(nodes[i].transform.position, nodes[i + 1].transform.position);
-            }
-            else if (circularPath)
-            {
-                Gizmos.DrawLine(nodes[i].transform.position, nodes[0].transform.position);
+                if (i < nodes.Count - 1)
+                {
+                    Gizmos.DrawLine(nodes[i].transform.position, nodes[i + 1].transform.position);
+                }
+                else if (circularPath)
+                {
+                    Gizmos.DrawLine(nodes[i].transform.position, nodes[0].transform.position);
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Enum_GameStates startingState;
     [SerializeField] private Camera loadingCamera;
     [SerializeField] private float loadScreenFadeTime = 2;
+    [SerializeField] private Material defaultSkybox;
     
     private string currentSceneName;
     public static GameManager Instance;
@@ -78,23 +79,9 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
         }
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
         yield return new WaitForSeconds(loadingScreenUI.LoadFadeOut(loadScreenFadeTime));
         loadingScreenGo.SetActive(false);
-    }
-
-    public float LoadingScreenFadeIn(float duration)
-    {
-        loadingScreenGo.SetActive(true);
-        loadingScreenUI.LoadFadeIn(duration);
-        return duration;
-    }
-    
-    public float LoadingScreenFadeOut(float duration)
-    {
-        loadingScreenGo.SetActive(true);
-        loadingScreenUI.LoadFadeOut(duration);
-        loadingScreenGo.SetActive(false);
-        return duration;
     }
 
     public void SetNewMainCamera(Camera newMainCamera)
@@ -124,5 +111,11 @@ public class GameManager : MonoBehaviour
     public void LoadGameoverState()
     {
         
+    }
+    
+    public void SetSkybox(Material skybox)
+    {
+        RenderSettings.skybox = skybox ?? defaultSkybox;
+        DynamicGI.UpdateEnvironment();
     }
 }
